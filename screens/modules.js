@@ -30,7 +30,7 @@ const ModulesPage = () => {
     try {
       const jwtToken = await AsyncStorage.getItem("jwt");
       const response = await axios.post(
-        `http://192.168.1.4:3000/api/assignment/student`,
+        `http://192.168.8.132:3000/api/assignment/student`,
         {
           moduleName: moduleName,
         },
@@ -59,7 +59,7 @@ const ModulesPage = () => {
         const jwtToken = await AsyncStorage.getItem("jwt"); // get jwt token from AsyncStorage
 
         const response = await axios.get(
-          "http://192.168.1.4:3000/api/lecture-modules/student",
+          "http://192.168.8.132:3000/api/lecture-modules/student",
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
