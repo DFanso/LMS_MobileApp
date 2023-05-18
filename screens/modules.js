@@ -5,7 +5,8 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Linking } from "react-native";
 
-const ModulesPage = () => {
+
+const ModulesPage = ({ onHomePress }) => {
   const [selectedModule, setSelectedModule] = useState(null);
   const [modules, setModules] = useState([]);
   const [lectureMaterials, setLectureMaterials] = useState([]);
@@ -30,7 +31,7 @@ const ModulesPage = () => {
     try {
       const jwtToken = await AsyncStorage.getItem("jwt");
       const response = await axios.post(
-        `http://192.168.8.132:3000/api/assignment/student`,
+        `http://192.168.1.5:3000/api/assignment/student`,
         {
           moduleName: moduleName,
         },
@@ -59,7 +60,7 @@ const ModulesPage = () => {
         const jwtToken = await AsyncStorage.getItem("jwt"); // get jwt token from AsyncStorage
 
         const response = await axios.get(
-          "http://192.168.8.132:3000/api/lecture-modules/student",
+          "http://192.168.1.5:3000/api/lecture-modules/student",
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -82,6 +83,13 @@ const ModulesPage = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={onHomePress}
+      >
+        <FontAwesome name="home" size={24} color="#4169e1" />
+      </TouchableOpacity>
+
       <View style={styles.headingbox}>
         <Text style={styles.welcomeText}>Modules & Lecture Notes</Text>
       </View>
@@ -215,6 +223,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 20,
     width: "45%",
+  },
+  homeButton: {
+    position: 'absolute',
+    top: 30,
+    left: 15,
+    padding: 10,
   },
 });
 

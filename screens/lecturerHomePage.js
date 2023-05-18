@@ -89,13 +89,13 @@ const LecturerHomePage = () => {
 
                 </View>
             ) : page === 'ModulesPage' ? (
-                <LecturerModulesPage />
+                <LecturerModulesPage onHomePress={() => setPage('LecturerHomePage')} />
             ) : page === 'LecturerGradesPage' ? (
-                <LecturerGradesPage />
+                <LecturerGradesPage onHomePress={() => setPage('LecturerHomePage')} />
             ) : page === 'LecTimeTableScreen' ? (
-                <LecturerTimeTableScreen />
+                <LecturerTimeTableScreen onHomePress={() => setPage('LecturerHomePage')} />
             ) : (
-                <LecturerProfileScreen />
+                <LecturerProfileScreen onHomePress={() => setPage('LecturerHomePage')} />
             )}
         </>
     );

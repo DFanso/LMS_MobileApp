@@ -11,8 +11,9 @@ import {
 import * as DocumentPicker from "expo-document-picker";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FontAwesome } from "@expo/vector-icons";
 
-const LecturerModulesPage = () => {
+const LecturerModulesPage = ({ onHomePress }) => {
   const [selectedModule, setSelectedModule] = useState(null);
   const [showBox, setShowBox] = useState(false);
   const [title, setTitle] = useState("");
@@ -23,7 +24,7 @@ const LecturerModulesPage = () => {
     const fetchModules = async () => {
       const token = await AsyncStorage.getItem("jwt");
       const response = await axios.get(
-        "http://192.168.8.132:3000/api/lecture-modules/getAllLectureModulesNoFilter",
+        "http://192.168.1.5:3000/api/lecture-modules/getAllLectureModulesNoFilter",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -83,7 +84,7 @@ const LecturerModulesPage = () => {
       name: file.name,
     });
     axios
-      .post("http://192.168.8.132:3000/api/assignment", {
+      .post("http://192.168.1.5:3000/api/assignment", {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -102,6 +103,12 @@ const LecturerModulesPage = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.homeButton}
+          onPress={onHomePress}
+        >
+          <FontAwesome name="home" size={24} color="#4169e1" />
+        </TouchableOpacity>
         <View style={styles.headingbox}>
           <Text style={styles.welcomeText}>Modules</Text>
         </View>
@@ -233,6 +240,12 @@ const styles = StyleSheet.create({
     color: "#2b4e96",
     textAlign: "center",
     textAlign: "left",
+  },
+  homeButton: {
+    position: 'absolute',
+    top: 10,
+    left: 5,
+    padding: 10,
   },
 });
 

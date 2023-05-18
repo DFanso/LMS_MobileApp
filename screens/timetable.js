@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FontAwesome } from "@expo/vector-icons";
 
-const TimeTableScreen = () => {
+const TimeTableScreen = ({ onHomePress }) => {
   const [lectures, setLectures] = useState([]);
 
   useEffect(() => {
     const fetchLectures = async () => {
       const token = await AsyncStorage.getItem("jwt");
       const response = await axios.get(
-        "http://192.168.8.132:3000/api/lecture-schedules/filter",
+        "http://192.168.1.5:3000/api/lecture-schedules/filter",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -22,6 +23,13 @@ const TimeTableScreen = () => {
 
   return (
     <View style={styles.container}>
+
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={onHomePress}
+      >
+        <FontAwesome name="home" size={24} color="#4169e1" />
+      </TouchableOpacity>
       <View style={styles.headingbox}>
         <Text style={styles.welcomeText}>Lecture Schedule</Text>
       </View>
@@ -90,6 +98,12 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     marginRight: 10,
+  },
+  homeButton: {
+    position: 'absolute',
+    top: 30,
+    left: 15,
+    padding: 10,
   },
 });
 

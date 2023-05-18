@@ -10,8 +10,9 @@ import {
 } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FontAwesome } from "@expo/vector-icons";
 
-const LecturerGradesPage = () => {
+const LecturerGradesPage = ({ onHomePress }) => {
   const [selectedModule, setSelectedModule] = useState(null);
   const [presentationGrade, setPresentationGrade] = useState("");
   const [examGrade, setExamGrade] = useState("");
@@ -26,7 +27,7 @@ const LecturerGradesPage = () => {
     const fetchModules = async () => {
       const token = await AsyncStorage.getItem("jwt");
       const response = await axios.get(
-        "http://192.168.8.132:3000/api/lecture-modules/getAllLectureModulesNoFilter",
+        "http://192.168.1.5:3000/api/lecture-modules/getAllLectureModulesNoFilter",
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setModules(response.data);
@@ -43,7 +44,7 @@ const LecturerGradesPage = () => {
     const ModuleName = selectedModule;
     // Make a POST request
     await axios.post(
-      "http://192.168.8.132:3000/api/lecturer/AddResult",
+      "http://192.168.1.5:3000/api/lecturer/AddResult",
       {
         studentId: studentId,
         ModuleName: ModuleName,
@@ -67,6 +68,12 @@ const LecturerGradesPage = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.homeButton}
+          onPress={onHomePress}
+        >
+          <FontAwesome name="home" size={24} color="#4169e1" />
+        </TouchableOpacity>
         <View style={styles.headingbox}>
           <Text style={styles.welcomeText}>Grades</Text>
         </View>
@@ -238,6 +245,12 @@ const styles = StyleSheet.create({
     color: "#2b4e96",
     textAlign: "center",
     textAlign: "left",
+  },
+  homeButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    padding: 10,
   },
 });
 
