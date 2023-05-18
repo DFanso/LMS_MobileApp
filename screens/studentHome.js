@@ -99,13 +99,13 @@ const StudentHomePage = () => {
                 </View>
 
             ) : page === 'ModulesPage' ? (
-                <ModulesPage />
+                <ModulesPage onHomePress={() => setPage('StudentHomePage')} />
             ) : page === 'GradesPage' ? (
-                <GradesPage />
+                <GradesPage onHomePress={() => setPage('StudentHomePage')} />
             ) : page === 'timetablescreen' ? (
-                <TimeTableScreen />
+                <TimeTableScreen onHomePress={() => setPage('StudentHomePage')} />
             ) : (
-                <StudentProfileScreen />
+                <StudentProfileScreen onHomePress={() => setPage('StudentHomePage')} />
             )}
         </>
     );

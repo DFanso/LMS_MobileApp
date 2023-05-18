@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FontAwesome } from "@expo/vector-icons";
 
-const LecturerProfileScreen = () => {
+const LecturerProfileScreen = ({ onHomePress }) => {
   const [lecturer, setLecturer] = useState(null);
 
   useEffect(() => {
@@ -12,7 +13,7 @@ const LecturerProfileScreen = () => {
       try {
         const token = await AsyncStorage.getItem("jwt"); // Replace 'token' with your key
         const response = await axios.post(
-          "http://192.168.8.132:3000/api/lecturer/getLecturerDetailsById",
+          "http://192.168.1.5:3000/api/lecturer/getLecturerDetailsById",
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -35,6 +36,12 @@ const LecturerProfileScreen = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={onHomePress}
+      >
+        <FontAwesome name="home" size={24} color="#4169e1" />
+      </TouchableOpacity>
       <View style={styles.headingbox}>
         <Text style={styles.welcomeText}>Lecturer profile</Text>
       </View>
@@ -154,6 +161,12 @@ const styles = StyleSheet.create({
     color: "#2b4e96",
     textAlign: "center",
     textAlign: "left",
+  },
+  homeButton: {
+    position: 'absolute',
+    top: -40,
+    left: 30,
+    padding: 10,
   },
 });
 
