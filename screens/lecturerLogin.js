@@ -51,7 +51,7 @@ const LecturerLogin = () => {
       // axios call for login
       try {
         const response = await axios.post(
-          "http://192.168.1.4:3000/api/lecturer/login",
+          "http://192.168.8.132:3000/api/lecturer/login",
           {
             username,
             password,
